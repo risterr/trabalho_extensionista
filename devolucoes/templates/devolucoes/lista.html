@@ -1,0 +1,53 @@
+{% extends 'devolucoes/base.html' %}
+
+{% block conteudo %}
+<h2>Devoluções registradas</h2>
+
+<form method="get" style="margin-bottom:10px;">
+    <label>Filtrar por marketplace</label>
+    <select name="marketplace" class="campo" style="width:250px;">
+        <option value="">Todos</option>
+        {% for valor, nome in marketplaces %}
+            <option value="{{ valor }}" {% if valor == marketplace_escolhido %}selected{% endif %}>{{ nome }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="botao" style="margin-top:8px;">Filtrar</button>
+</form>
+
+<table>
+    <tr>
+        <th>Código</th>
+        <th>Produto</th>
+        <th>Marketplace</th>
+        <th>Motivo</th>
+        <th>Situação</th>
+        <th>Valor</th>
+        <th>Data</th>
+        <th>Registrado por</th>
+        <th>Ações</th>
+    </tr>
+    {% for d in devolucoes %}
+    <tr>
+        <td>{{ d.codigo_produto }}</td>
+        <td>{{ d.nome_produto }}</td>
+        <td>{{ d.marketplace }}</td>
+        <td>{{ d.motivo }}</td>
+        <td>{{ d.situacao }}</td>
+        <td>R$ {{ d.valor|floatformat:2 }}</td>
+        <td>{{ d.data_devolucao|date:"d/m/Y" }}</td>
+        <td>{{ d.registrado_por }}</td>
+        <td>
+            <form method="post" action="{% url 'excluir' d.id %}"
+                  onsubmit="return confirm('Excluir esta devolução? Essa ação nao pode ser desfeita.');">
+                {% csrf_token %}
+                <button type="submit" class="botao-excluir">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="9">Nenhuma devolução registrada ainda.</td></tr>
+    {% endfor %}
+</table>
+
+<p style="font-size:12px; color:#666;">Total de registros exibidos: {{ devolucoes|length }}</p>
+{% endblock %}

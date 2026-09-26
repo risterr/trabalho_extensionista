@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Identificação - Controle de Devoluções</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f3f5;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .caixa-login {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 30px;
+            width: 380px;
+            max-width: 90%;
+        }
+        .caixa-login h1 {
+            color: #1f3864;
+            font-size: 18px;
+            margin-top: 0;
+            text-align: center;
+        }
+        .caixa-login p {
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            margin-top: 0;
+        }
+        label { display: block; margin-top: 14px; font-size: 14px; font-weight: bold; color: #333; }
+        select {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #bbb;
+            font-size: 15px;
+            margin-top: 6px;
+        }
+        .botao {
+            width: 100%;
+            background-color: #2f5597;
+            color: white;
+            border: none;
+            padding: 11px;
+            font-size: 14px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .erro {
+            background-color: #fbe5e5;
+            color: #c00000;
+            padding: 8px 10px;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="caixa-login">
+        <h1>Sistema de Controle de Devolução</h1>
+        <p>Informe o ID do funcionário para continuar</p>
+
+        {% if erro %}
+            <div class="erro">{{ erro }}</div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <label>ID do funcionário</label>
+            <select name="funcionario_id">
+                <option value="">- Selecione -</option>
+                {% for id, nome in funcionarios %}
+                    <option value="{{ id }}">{{ id }} - {{ nome }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="botao">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

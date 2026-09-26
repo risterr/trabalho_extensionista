@@ -1,0 +1,20 @@
+{% extends 'devolucoes/base.html' %}
+
+{% block conteudo %}
+<h2>Registrar nova devolução</h2>
+<p style="font-size:13px; color:#666;">
+    Preencha os dados da mercadoria que chegou de volta no estoque.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    {% for campo in form %}
+        <label>{{ campo.label }}</label>
+        {{ campo }}
+        {% if campo.errors %}
+            <span style="color:#c00; font-size:12px;">{{ campo.errors.0 }}</span>
+        {% endif %}
+    {% endfor %}
+    <button type="submit" class="botao">Salvar devolução</button>
+</form>
+{% endblock %}

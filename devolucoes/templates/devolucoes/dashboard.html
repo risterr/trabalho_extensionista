@@ -1,0 +1,52 @@
+{% extends 'devolucoes/base.html' %}
+
+{% block conteudo %}
+<h2>Dashboard de devoluções</h2>
+
+<div class="caixas">
+    <div class="caixa">
+        <div class="numero">{{ total }}</div>
+        <div class="texto">Devoluções registradas</div>
+    </div>
+    <div class="caixa">
+        <div class="numero">R$ {{ valor_total|floatformat:2 }}</div>
+        <div class="texto">Valor total devolvido</div>
+    </div>
+    <div class="caixa">
+        <div class="numero">{{ descarte }}</div>
+        <div class="texto">Produtos para descarte</div>
+    </div>
+</div>
+
+<h2>Produtos mais devolvidos</h2>
+<table>
+    <tr><th>Produto</th><th>Quantidade</th></tr>
+    {% for p in por_produto %}
+    <tr><td>{{ p.nome_produto }}</td><td>{{ p.qtd }}</td></tr>
+    {% endfor %}
+</table>
+
+<h2 style="margin-top:25px;">Valor devolvido por marketplace</h2>
+<table>
+    <tr><th>Marketplace</th><th>Devoluções</th><th>Valor total</th></tr>
+    {% for m in por_marketplace %}
+    <tr><td>{{ m.marketplace }}</td><td>{{ m.qtd }}</td><td>R$ {{ m.valor|floatformat:2 }}</td></tr>
+    {% endfor %}
+</table>
+
+<h2 style="margin-top:25px;">Motivos das devoluções</h2>
+{% for m in por_motivo %}
+    <div style="margin-bottom:10px;">
+        <span style="font-size:13px;">{{ m.motivo }} - {{ m.qtd }} ({{ m.porcentagem }}%)</span>
+        <div class="barra"><div style="width:{{ m.porcentagem }}%;"></div></div>
+    </div>
+{% endfor %}
+
+<h2 style="margin-top:25px;">Devoluções registradas por funcionário</h2>
+<table>
+    <tr><th>Funcionario</th><th>Devoluções registradas</th></tr>
+    {% for f in por_funcionario %}
+    <tr><td>{{ f.registrado_por }}</td><td>{{ f.qtd }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
