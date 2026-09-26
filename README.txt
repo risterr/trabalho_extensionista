@@ -23,6 +23,3 @@ COMO RODAR O PROJETO:
 
 PARA RODAR OS TESTES FUNCIONAIS:
    python teste_cadastro.py
-
-OBSERVACAO: os dados do arquivo popular_teste.py sao ficticios,
-criados apenas para testar as telas. Nao sao dados reais da empresa.
